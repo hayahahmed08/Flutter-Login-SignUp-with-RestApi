@@ -17,7 +17,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void login(String email, String password) async {
     try {
       http.Response response = await http.post(
-        Uri.parse('https://reqres.in/api/register'),
+        //Uri.parse('https://reqres.in/api/register'), for sign up
+
+        Uri.parse('https://reqres.in/api/login'), //for login
         body: {
           'email': email,
           'password': password,
@@ -98,56 +100,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
 
 
-CREATE TABLE UserDim
-(
-UserID INT NOT NULL,
-UserName VARCHAR(50) NOT NULL,
-Gender VARCHAR(10) NOT NULL,
-Age INT NOT NULL,
-Location VARCHAR(255) NOT NULL,
-PRIMARY KEY (UserID)
-);
-
-CREATE TABLE VideoDim
-(
-VideoID INT NOT NULL,
-VideoTitle VARCHAR(100) NOT NULL,
-Channel VARCHAR(50) NOT NULL,
-Category VARCHAR(50) NOT NULL,
-UploadDate DATE NOT NULL,
-PRIMARY KEY (VideoID)
-);
-
-CREATE TABLE TimeDim
-(
-DateViewed DATE NOT NULL,
-DayOfWeek VARCHAR(20) NOT NULL,
-Month VARCHAR(20) NOT NULL,
-Year INT NOT NULL,
-PRIMARY KEY (DateViewed)
-);
-
-
-CREATE TABLE DeviceDim
-(
-DeviceID INT NOT NULL,
-DeviceName VARCHAR(100) NOT NULL,
-DeviceType VARCHAR(20) NOT NULL,
-OperatingSystem VARCHAR(50) NOT NULL,
-PRIMARY KEY (DeviceID)
-);
-
-CREATE TABLE VideoViewsFacts
-(
-ViewID INT NOT NULL,
-Duration INT NOT NULL,
-UserID INT NOT NULL,
-DeviceID INT NOT NULL,
-VideoID INT NOT NULL,
-DateViewed DATE NOT NULL,
-PRIMARY KEY (ViewID),
-FOREIGN KEY (UserID) REFERENCES UserDim(UserID),
-FOREIGN KEY (DeviceID) REFERENCES DeviceDim(DeviceID),
-FOREIGN KEY (VideoID) REFERENCES VideoDim(VideoID),
-FOREIGN KEY (DateViewed) REFERENCES TimeDim(DateViewed)
-);
